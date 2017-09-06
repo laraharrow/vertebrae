@@ -26,23 +26,26 @@ var Comment = Backbone.Model.extend({
   initialize: function(message) {
     /* Set the initial values for `votes` to 0 and `message` to the message.
      * Remember to use setters when working with attributes! */
-     this.votes = 0;
-     this.message = message;
+     this.set('votes', 0);
+     this.set('message', message);
   },
   votes: function() {
     /* Return the votes attribute on this model.
      * Remember to use a getter when working with attributes! */
-     return this.get(message);
+     return this.get('votes');
   },
   upvote: function(){
     // Set the `votes` attribute to the current vote count plus one.
-    this.set(votes++);
+    var votes = this.get('votes');
+    this.set('votes', ++votes);
   },
+  // Add a downvote function; don't forget the comma above.
   downvote: function(){
     //Set the 'votes' attribute to the current vote count minus one.
-    this.set(votes--);
-  }
-  // Add a downvote function; don't forget the comma above.
+    var votes = this.get('votes');
+    this.set('votes', --votes);
+  } 
+  
 });
 
 /* - Backbone VIEW ------------------------------------------------------------
@@ -71,7 +74,7 @@ var CommentView = Backbone.View.extend({
      * - `'change:votes'` => this first argument defines what to listen for
      *   - We can listen for a change on a specific attribute using a colon.
      * - `function`       => this is the callback for this event listener */
-      this.render()
+      this.render();          
     /*   - Usually, we can't rely on `this` being what we think it is in
      *      an event listener. However, Backbone allows us to specify what
      *      `this` will be in the third argument of `model.on`,
@@ -129,7 +132,7 @@ var CommentView = Backbone.View.extend({
 
 /* Create a new comment model using our Comment class,
  * passing the first message as an argument: */
-var comment = new Comment('This is a message');
+var comment = new Comment(' This is a message');
 
 // Create a view, and associate it with this model:
 var commentView = new CommentView({ model: comment });
